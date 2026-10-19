@@ -4,7 +4,7 @@ import isEqual from "lodash/isEqual";
 import { Human } from "../agents/humanAgent";
 import { NewHuman } from "../agents/newAgent";
 import { PermutationHandler } from "./permutationHandler";
-import { globalP5 } from "../main/main";
+import { globalP5 } from "../../main";
 import { permutation } from "js-combinatorics";
 // import { globalWorld } from "../main/main";
 import { Metrics } from "../metrics/metrics";

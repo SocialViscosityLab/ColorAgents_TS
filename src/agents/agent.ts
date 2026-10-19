@@ -1,6 +1,6 @@
 import p5 from "p5";
 import { ColorValue } from "../interfaces";
-import { globalP5 } from "../main/main";
+import { globalP5 } from "../../main";
 import { InteractionDistance } from "../interfaces";
 import {World} from "../world"
 import { AgentPair } from "../interfaces";

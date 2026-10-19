@@ -3,7 +3,7 @@ import { AgentPair } from "../interfaces";
 import { ColorValue } from "../interfaces";
 import { ColorMentalModel } from "../mentalModels/cMentalModel";
 import { SpatialMentalModel } from "../mentalModels/sMentalModel";
-import { globalP5 } from "../main/main";
+import { globalP5 } from "../../main";
 import { Utils } from "../utils/utils";
 import { DOM } from "../GUI_DOM/DOMManager";
 import { Color } from "chroma-js";
