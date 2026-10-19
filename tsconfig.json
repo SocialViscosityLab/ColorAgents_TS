@@ -2,7 +2,7 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "./dist",
 
     // Environment Settings
@@ -35,13 +35,17 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-   // "verbatimModuleSyntax": true,
+    // "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
-    "esModuleInterop": true,
+    "esModuleInterop": true
     /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-  }
+  },
+  "include": [
+    "main.ts", // Explicitly covers main.ts at the root
+    "src/**/*" // Covers all files inside the src directory
+  ]
 }
