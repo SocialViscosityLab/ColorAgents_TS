@@ -1,0 +1,199 @@
+import { Agent } from "./agent";
+import { AgentPair } from "../interfaces";
+import { ColorValue } from "../interfaces";
+import { ColorMentalModel } from "../mentalModels/cMentalModel";
+import { SpatialMentalModel } from "../mentalModels/sMentalModel";
+import { globalP5 } from "../main/main";
+import { Utils } from "../utils/utils";
+import { DOM } from "../GUI_DOM/DOMManager";
+import { Color } from "chroma-js";
+
+/**
+Human agent. Extends Agent
+@param {Number} x the x coordinate on canvas
+@param {Number} y the y coordinate on canvas
+@param {String} index the id of this agent
+@param {ColorValue} theColor the color id of this agent. 
+@param {String} colorPalette the color palette used by this agent
+@param {Number} shortest scalar used by spatial mental model to determine what on canvas 
+how near an agent wants to be from the most similar agent
+@param {Number} farthest scalar used by spatial mental model to determine what on canvas 
+how far away an agent was to be from the most dissimilar agent
+*/
+export class Human extends Agent {
+  cMentalModel: ColorMentalModel;
+  sMentalModel: SpatialMentalModel;
+  visualPerceptionAngle: number;
+  farthest: number;
+  radiusFactor: number;
+
+  constructor(x: number, y: number, index: string, theColor: ColorValue, colorPalette: string, shortest: number, farthest: number) {
+    super(x, y, index);
+
+    /** TODO refactor this property name with this.chromaColor  */
+    this.colorValues = theColor;
+
+    this.cMentalModel = new ColorMentalModel(colorPalette, DOM.lists.sensibility.value);
+
+    DOM.lists.sensibility.addEventListener("change", () => {
+      this.cMentalModel.updateSensibility(DOM.lists.sensibility.value);
+    });
+
+    /** This agents' spacial Mental Model. This represents the unique way this agent perceives distances in the world*/
+    this.sMentalModel = new SpatialMentalModel(shortest, farthest);
+
+    // Finds the index of this agent's color inside its own color mental model
+    this.cMentalModel.setMyIndex(this.colorValues.value);
+
+    /** Visual perception angle in radians*/
+    this.visualPerceptionAngle = (Math.PI * 3) / 4;
+
+    /** Percentage of "color similarity" that triggers this agent to act. Value between 0 and 1. Where 1 means
+        that all the colors fall within the range of colors that trigger actions. 0.7 means that only
+        colors within 70% range of perceived colors trigger actions. */
+    //this.colorTriggerBoundary = 1;
+
+    // The lowest distance this agent starts perceiving something as far away. This is used in the alpha mapping
+    // function of the visualization matrix
+    this.farthest = farthest;
+
+    // The amplification factor of interaction radius scope
+    this.radiusFactor = 10;
+  }
+
+  /**
+    * Calls one interaction with other agents stored in its own collection of pairs.
+    * It is usually used in recursive structures. In this case, this function follows these
+    * steps: 
+    1) Record agent's current position,
+    2) Store agent's last position before moving, 
+    3) Filter pairs with whom to interact according to user settings,
+    4) If there is any interactant
+    4.1) Estimate the magnitude of next step using this.calculateStep(), 
+    4.2) Verfiy if the change is worth to execute the movement. Threshold in user settings,
+    4.3 Set the new bearing
+    4.4) move or set done status to true.
+    5) If no interactants
+    5.1) Set done status to true.
+    */
+  interact() {
+    // Store my current position
+    this.locations.push(globalP5.createVector(this.pos.x, this.pos.y)); //{ x: this.pos.x, y: this.pos.y });
+
+    // Store the last position before moving
+    this.lastPos.set(this.pos);
+
+    // get the interactants
+    let interactants = this.retrieveInteractants();
+
+    // Estimate the magnitude and direction of next step with all the current interactants
+    // WARNING: This function internally updates spatial distances.
+    // See function definition below
+    if (interactants.length > 0) {
+      let nextPos = this.calculateStep(interactants);
+
+      // Get change magnitude threshold using user settings
+      let magnitudeThreshold = DOM.sliders.tolerance.value * (this.sMentalModel.farthest - this.sMentalModel.shortest);
+      magnitudeThreshold += this.sMentalModel.shortest;
+
+      // Verfiy if the change is worth to execute the movement
+      if (nextPos.mag() > Number(magnitudeThreshold)) {
+        this.bearing = nextPos.heading();
+        this.iAmDone = false;
+        // Move
+        this.move(nextPos.mag(), nextPos.heading(), this.stepLengthFactor);
+      } else {
+        this.iAmDone = true;
+        // console.log(`this agent ${this.id} has no significant change in position. Setting iAmDone to true`);
+      }
+    } else {
+      this.iAmDone = true;
+      // console.log(`this agent ${this.id} has no interactants. Setting iAmDone to true`);
+    }
+  }
+
+  /**
+   * Estimate direction and magnitude of a step by adding the vectors towards each interactant
+   * @param {Array} interactants the collection of interactans of this agent.
+   * @return {p5.Vector} the vector
+   */
+  calculateStep(interactants: AgentPair[]) {
+    let vector;
+
+    for (let i of interactants) {
+      let interactant = i.agent;
+
+      // Calculate vector magnitude
+      // Use the mental model to calculate the perceived distance to each interactant
+      let perceivedColorDistance = this.cMentalModel.getPerceivedColorDistance(interactant.colorValues?.value!);
+      /*
+			There are spatial distances between this agent's location and the interactants'
+			locations. Such distances may not correspond to this agent's perceived color
+			distance when converted into spatial distances. The result of mapping the
+			perceived color distance into a spatial distance is the spatial magnitude.
+			If the difference between the spatial magnitude and the spatial distance is
+			negative, this agent should get closer to the other agent, and viceversa.
+	
+			This means that this agent should have a mechanism to 'transduce' perceived
+			color distance into the spatial distances. That is why we need a Spatial Mental
+			Model.
+			*/
+      let spatialMag = this.sMentalModel.mapMagnitude(perceivedColorDistance!);
+
+      //Calculate the current spatial distance
+      let currentDist = Utils.euclideanDist(this, interactant);
+
+      //Calculate the difference between the spatialMagnitude and the actual spatial distance
+      let deltaDist = currentDist - spatialMag;
+
+      // Update distances. This could be done somewhere else, but here it saves the cost of iterating over all the interactants
+      this.updateDistanceMap(interactant.id, spatialMag, currentDist);
+
+      // for the first interactant
+      if (!vector) {
+        // Calculate the angle between this and the pair agent
+        let tmp = Math.atan2(interactant.pos.y - this.pos.y, interactant.pos.x - this.pos.x);
+        vector = globalP5.createVector(Math.cos(tmp) * deltaDist, Math.sin(tmp) * deltaDist);
+      } else {
+        let tmp = Math.atan2(interactant.pos.y - this.pos.y, interactant.pos.x - this.pos.x);
+        let tmpV = globalP5.createVector(Math.cos(tmp) * deltaDist, Math.sin(tmp) * deltaDist);
+        vector.add(tmpV);
+      }
+    }
+    if (vector == undefined) {
+      return globalP5.createVector(0, 0);
+    } else {
+      return vector;
+    }
+  }
+
+  /**
+   * Retrieves a filtered subset of agents from the total set of pairs. By default it retrieves all of them
+   *  @param {Array} agents The list of agents with whom this agent will interact. Agents in this list will be matched with
+   *  this agent's list of pairs and set their {boolean} interactant parameter to TRUE.
+   *  @return {Array} The list of "TRUE" interactants
+   */
+  retrieveInteractants(otherAgents: AgentPair[] = this.getPairs()) {
+    // read the user choice
+    let val = DOM.sliders.range;
+    let interactants;
+    switch (DOM.lists.rule.value) {
+      case "nClosest":
+        DOM.labels.sliderValue.innerHTML = val.value;
+        interactants = Utils.chooseNClosest(this, Number(val.value), otherAgents);
+        break;
+      case "radius":
+        DOM.labels.sliderValue.innerHTML = val.value * this.radiusFactor;
+        interactants = Utils.chooseByRadius(this, Number(val.value) * this.radiusFactor, otherAgents);
+        break;
+      case "byField":
+        DOM.labels.sliderValue.innerHTML = val.value * this.radiusFactor * 2;
+        interactants = Utils.chooseByField(this, Number(val.value) * this.radiusFactor * 2, otherAgents);
+        break;
+      case "all":
+        interactants = this.resetInteractants();
+        break;
+    }
+    return interactants!.filter(this.isInteractant);
+  }
+}

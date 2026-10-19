@@ -1,0 +1,42 @@
+p {
+  font-size: 11px;
+}
+
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+button {
+  margin-bottom: 1vh;
+}
+
+.draggable {
+  position: fixed;
+}
+
+.floating-div {
+  /* position: fixed; */
+  /* top: 50vh;
+  left:25vw; */
+  border: 1px solid #d3d3d3;
+  background-color: rgba(241, 241, 241, 0.5);
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 9999; /* Ensures it stays on top of all content */
+  /* background-color: #ffffff; */
+  width:fit-content;
+}
+
+.drag-handle {
+  font-size: 12px;
+  color:rgb(128, 128, 128);
+  margin-left: 1.5em;
+  margin-top: 0.6em;
+  background-color: rgba(241, 241, 241, 0.5);
+  cursor: move; /* Changes cursor to a drag icon */
+  /* background-color: #2196f3;
+        color: #ffffff; */
+  user-select: none; /* Prevents text highlighting while dragging */
+  border:none;
+  box-shadow: none;
+}
