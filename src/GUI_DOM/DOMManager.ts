@@ -2,7 +2,6 @@
  * This static class manages all the GUI elements displayed in the browser and serves as an interface between the DOM and the JavaScript code.
  */
 
-import { ViscosityPoint } from "../interfaces";
 import { Agent } from "../agents/agent";
 
 export class DOM {
@@ -222,6 +221,9 @@ export class DOM {
     }
   }
 }
+
+// Add this line:
+export default DOM;
 
 DOM.buttons = {};
 DOM.checkboxes = {};

@@ -15,10 +15,10 @@
 
     <script src="./main.ts" type="module"></script>
     <script type="module">
-      import * as DOMExports from "./src/GUI_DOM/DOMManager.ts";
+      import {DOM} from "./src/GUI_DOM/DOMManager.ts";
 
       // Module bindings are not visible to inline HTML event handlers.
-      window.DOM = DOMExports.default || DOMExports.DOM;
+      window.DOM = DOM.default || DOM.DOM;
     </script>
 
     <!-- CSS -->

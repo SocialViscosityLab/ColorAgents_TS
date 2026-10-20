@@ -108,6 +108,7 @@ export class PermutationHandler {
         let permuFileName = "src/permutations/" + agentGroup + ".json";
         // Promise
         var permuProm = new Promise(function (resolve) {
+            
           globalP5.loadJSON(
             permuFileName,
             (data: any) => {

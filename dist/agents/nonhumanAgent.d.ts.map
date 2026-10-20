@@ -1,1 +1,0 @@
-{"version":3,"file":"nonhumanAgent.d.ts","sourceRoot":"","sources":["../../src/agents/nonhumanAgent.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,MAAM,eAAe,CAAC;AAC3C,OAAO,EAAE,KAAK,EAAE,MAAM,SAAS,CAAC;AAEhC;;;GAGG;AACH,qBAAa,QAAS,SAAQ,KAAK;IACjC;;;;;;OAMG;IACH,YAAa,CAAC,EAAC,MAAM,EAAE,CAAC,EAAC,MAAM,EAAE,KAAK,EAAC,MAAM,EAAE,QAAQ,EAAC,UAAU,EAEjE;CACF"}
