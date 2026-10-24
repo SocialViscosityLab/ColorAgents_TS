@@ -21,7 +21,7 @@ export declare class DOM {
      * @param {string} listKey The name of the list whose options will be retrieved
      * @return {Array} The collection of options
      */
-    static getListOptions(listKey: string): string[];
+    static getListOptions(listKey: string): any[];
     /** Retrieves the value of all possible parameters for a slider. It creates an array with
      * all the values, starting from the min slider value up to the max slider value,
      * increasing in slider predefined steps.

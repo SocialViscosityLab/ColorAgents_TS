@@ -4,7 +4,7 @@ exports.Human = void 0;
 const agent_1 = require("./agent");
 const cMentalModel_1 = require("../mentalModels/cMentalModel");
 const sMentalModel_1 = require("../mentalModels/sMentalModel");
-const main_1 = require("../../main");
+const main_1 = require("../main/main");
 const utils_1 = require("../utils/utils");
 const DOMManager_1 = require("../GUI_DOM/DOMManager");
 /**

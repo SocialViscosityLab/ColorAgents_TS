@@ -4,7 +4,7 @@ exports.NewHuman = void 0;
 const agent_1 = require("./agent");
 const sMentalModel_1 = require("../mentalModels/sMentalModel");
 const DOMManager_1 = require("../GUI_DOM/DOMManager");
-const main_1 = require("../../main");
+const main_1 = require("../main/main");
 const utils_1 = require("../utils/utils");
 /**
  * Creates instances of nonhuman agents. Extends Agent

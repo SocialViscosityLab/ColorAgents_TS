@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InteractionMatrix = void 0;
 const interactionMatrixCanvas_1 = require("../dataViz/interactionMatrixCanvas");
 const DOMManager_1 = require("../GUI_DOM/DOMManager");
-const main_js_1 = require("../../main.js");
+const main_js_1 = require("../main/main.js");
 const world_1 = require("../world");
 const abms_1 = require("./abms");
 const metrics_1 = require("../metrics/metrics");

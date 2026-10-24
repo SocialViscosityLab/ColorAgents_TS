@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Utils = void 0;
 const isEqual_1 = __importDefault(require("lodash/isEqual"));
 const permutationHandler_1 = require("./permutationHandler");
-const main_1 = require("../../main");
+const main_1 = require("../main/main");
 const js_combinatorics_1 = require("js-combinatorics");
 // import { globalWorld } from "../main/main";
 const metrics_1 = require("../metrics/metrics");

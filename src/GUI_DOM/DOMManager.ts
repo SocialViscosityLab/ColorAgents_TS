@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 /**
  * This static class manages all the GUI elements displayed in the browser and serves as an interface between the DOM and the JavaScript code.
  */

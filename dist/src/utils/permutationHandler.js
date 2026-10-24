@@ -9,7 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PermutationHandler = void 0;
 const utils_1 = require("../utils/utils");
 const DOMManager_1 = require("../GUI_DOM/DOMManager");
-const main_1 = require("../../main");
+const main_1 = require("../main/main");
 class PermutationHandler {
     depth;
     n;

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Agent = void 0;
-const main_1 = require("../../main");
+const main_1 = require("../main/main");
 /**
  * The primary class to define an agent situated in a cartesian space.
  */
