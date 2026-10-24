@@ -196,15 +196,17 @@ export class Utils {
    * @return {Array} List of meaningful model permutations
    */
   static calculateCModelPermutations(agents: string[]) {
+    console.log('calculate permutations')
     let permutations: string[] = [];
-    let cmbs = permutation(agents).toArray();
-    cmbs.forEach((cmb: string[]) => {
-      let invModel = cmb.reverse().join(" ");
+    // let cmbs = permutation(agents).toArray();
+    // cmbs.forEach((cmb: string[]) => {
+    //   let invModel = cmb.reverse().join(" ");
 
-      if (!permutations.includes(invModel)) {
-        permutations.push(cmb.reverse().join(" "));
-      }
-    });
+    //   if (!permutations.includes(invModel)) {
+    //     permutations.push(cmb.reverse().join(" "));
+    //   }
+    // });
+    console.log("the utils.calculateCModelPermutations() function need to be revised")
     return permutations;
   }
 

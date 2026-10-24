@@ -7,8 +7,9 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "commonjs",
-    "target": "esnext",
+    //"module": "commonjs",
+    "module":"ESNext",
+    "target": "ESNext",
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -38,8 +39,5 @@
     "esModuleInterop": true
     /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
   },
-  "include": [
-    "src/main/main.ts", // Explicitly covers app.js at the root
-    "src/**/*" // Covers all files inside the src directory
-  ]
+
 }

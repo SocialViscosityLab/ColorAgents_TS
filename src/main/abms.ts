@@ -66,7 +66,7 @@ export class ABMS {
   initialize() {
     // Instantiate all the colors
     const cFactory = new ColorFactory(DOM.lists.cFactory.value);
-    console.log(DOM.lists.cFactory.value)
+    
     World.permuLoader = PermutationHandler.loadPermutations(DOM.lists.cFactory.value);
 
     // retrieve all the colors
