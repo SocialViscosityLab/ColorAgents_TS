@@ -1,7 +1,8 @@
 {
   "name": "coloragents_ts",
   "version": "1.0.0",
-  "main": "app.js",
+  "main": "main.ts",
+  "type":"module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
@@ -9,9 +10,9 @@
     "preview": "vite preview"
   },
   "keywords": [],
-  "author": "",
+  "author": "Juan Salamanca",
   "license": "ISC",
-  "description": "",
+  "description": "Colo agents simulation",
   "devDependencies": {
     "@types/bootstrap": "^5.2.11",
     "@types/chroma-js": "^3.1.2",
@@ -27,5 +28,13 @@
     "chroma-js": "^3.2.0",
     "js-combinatorics": "^2.1.4",
     "p5": "^2.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SocialViscosityLab/ColorAgents_TS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SocialViscosityLab/ColorAgents_TS/issues"
+  },
+  "homepage": "https://github.com/SocialViscosityLab/ColorAgents_TS#readme"
 }
