@@ -1,12 +1,12 @@
 import p5 from "p5";
-import { DOM } from "./src/GUI_DOM/DOMManager";
-import { InteractionMatrix } from "./src/main/interactionMatrix";
-import { ABMS } from "./src/main/abms.js";
-import { ViscosityChart } from "./src/main/viscosityChart";
-import { QualityChart } from "./src/main/modelsQualityChart";
-import { LearnedModels } from "./src/main/learnedModels";
-import { SegmentationChart } from "./src/main/viscositySegmentation";
-import { setUpUserInteractions } from "./src/GUI_DOM/userInteraction";
+import { DOM } from "../GUI_DOM/DOMManager";
+import { InteractionMatrix } from "./interactionMatrix";
+import { ABMS } from "./abms.js";
+import { ViscosityChart } from "./viscosityChart";
+import { QualityChart } from "./modelsQualityChart";
+import { LearnedModels } from "./learnedModels";
+import { SegmentationChart } from "./viscositySegmentation";
+import { setUpUserInteractions } from "../GUI_DOM/userInteraction";
 
 /**
  * The class Metrics and the ABMS's world indtance are available on the console. The instances are 'attached' to the global

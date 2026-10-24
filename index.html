@@ -13,12 +13,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-    <script src="./main.ts" type="module"></script>
-    <script type="module">
+    <script src="./src/main/main.ts" type="module"></script>
+    <script type="module" defer>
       import {DOM} from "./src/GUI_DOM/DOMManager.ts";
 
       // Module bindings are not visible to inline HTML event handlers.
-      window.DOM = DOM.default || DOM.DOM;
+      window.DOM = DOM;
     </script>
 
     <!-- CSS -->

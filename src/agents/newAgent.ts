@@ -3,7 +3,7 @@ import { Agent } from "./agent";
 import { AgentPair } from "../interfaces";
 import { SpatialMentalModel } from "../mentalModels/sMentalModel";
 import { DOM } from "../GUI_DOM/DOMManager";
-import { globalP5 } from "../../main";
+import { globalP5 } from "../main/main";
 import { Utils } from "../utils/utils";
 import { ExpectedResult } from "../interfaces";
 import { InteractantsRegister } from "../interfaces";

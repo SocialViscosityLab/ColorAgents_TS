@@ -8,7 +8,7 @@
 import { Utils } from "../utils/utils";
 import {ColorValue} from "../interfaces";
 import {DOM} from "../GUI_DOM/DOMManager";
-import { globalP5 } from "../../main";
+import { globalP5 } from "../main/main";
 
 declare const math: { gamma(value: number): number };
 

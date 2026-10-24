@@ -1,7 +1,7 @@
 import p5 from "p5";
 import { InteractionMatrixCanvas } from "../dataViz/interactionMatrixCanvas";
 import { DOM } from "../GUI_DOM/DOMManager";
-import { vizMatrix } from "../../main.js";
+import { vizMatrix } from "../main/main.js";
 import { World } from "../world";
 import { MatrixRow, Aid_Bid_Distance } from "../interfaces";
 import { ABMS } from "./abms";
