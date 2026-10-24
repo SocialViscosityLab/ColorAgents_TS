@@ -45,7 +45,7 @@
     /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
   },
   "include": [
-    "main.ts", // Explicitly covers main.ts at the root
+    "app.js", // Explicitly covers app.js at the root
     "src/**/*" // Covers all files inside the src directory
   ]
 }
