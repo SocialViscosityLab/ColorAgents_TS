@@ -37,6 +37,8 @@ export class ABMS {
   // Number of new agents
   NA: number;
 
+  keyMPressed: boolean;
+
   constructor(p5: p5) {
     console.log("Instantiating the ABMS class");
     this.p5Instance = p5;
@@ -59,6 +61,7 @@ export class ABMS {
     DOM.buttons.trajectories_to_JSON2.onclick = this.trajectoriesToJSON2;
     DOM.buttons.trajectories_to_CSV.onclick = this.trajectoriesToCSV;
 
+    this.keyMPressed = false;
     // Create an agent for each color
     this.initialize();
   }
@@ -66,7 +69,7 @@ export class ABMS {
   initialize() {
     // Instantiate all the colors
     const cFactory = new ColorFactory(DOM.lists.cFactory.value);
-    
+
     World.permuLoader = PermutationHandler.loadPermutations(DOM.lists.cFactory.value);
 
     // retrieve all the colors
@@ -141,6 +144,10 @@ export class ABMS {
     });
     // Compute permuations
     // let modelPermu = calculatePermutations(colors)
+
+    document.addEventListener("keydown", (evt) => {
+      if (evt.code == "KeyM") this.keyMPressed = true;
+    });
   }
 
   //Function controlled by guy element that enables or disables the animation
@@ -357,8 +364,34 @@ export class ABMS {
 
           let mouseProximity = this.p5Instance.dist(this.p5Instance.mouseX, this.p5Instance.mouseY, ABMS.vAgents[a]!.agent.pos.x, ABMS.vAgents[a]!.agent.pos.y);
 
+          // draw this agent's model on mouse hover
           if (mouseProximity < 10) {
             LearnedModels.drawModelOnAgent(this.p5Instance, ABMS.vAgents[a]!);
+
+            if (this.keyMPressed) {
+              const agent = ABMS.vAgents[a]?.agent;
+              const inputNames = window.prompt("enter the list of color names for " + (agent?.id ?? "agent"));
+              const inputColors = window.prompt("enter the list of rgb color values");
+              const paletteToken = inputColors
+                ?.split(",")
+                .map((entry) => entry.replace(/"/g, "").trim())
+                .filter((entry) => entry.length > 0);
+
+              const maxPaletteIndex = (paletteToken?.length ?? 0) - 1;
+              const inputIndexString = window.prompt("enter the index. It should be a number from 0 up to " + maxPaletteIndex);
+              const inputIndex = inputIndexString !== null ? Number(inputIndexString) : undefined;
+
+              if (agent && inputNames !== null && "setCustomColorPaleteAndIndex" in agent) {
+                try {
+                  if (!inputIndex || !inputNames || !paletteToken) throw Error;
+                  if (inputIndex > inputNames.split(",").length - 1) throw Error;
+                  agent.setCustomColorPaleteAndIndex(inputNames, paletteToken!, inputIndex!);
+                } catch (err) {
+                  window.alert("Data for new color mental model is incomplete or ill formated");
+                }
+              }
+              this.keyMPressed = false;
+            }
           }
         }
       }

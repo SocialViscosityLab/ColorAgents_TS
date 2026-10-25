@@ -60,7 +60,12 @@ export class ColorMentalModel {
    */
   setColorPalette(paletteName: string) {
     this.cFactory = new ColorFactory(paletteName);
-     this.colorPalette = this.cFactory.getAll();
+    this.colorPalette = this.cFactory.getAll();
+  }
+
+  setCustomColorPalette(names: string, values: string[]) {
+    this.cFactory!.initializeCustom(names, values);
+    this.colorPalette = this.cFactory!.getAll();
   }
 
   /**

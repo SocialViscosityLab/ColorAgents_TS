@@ -196,4 +196,17 @@ export class Human extends Agent {
     }
     return interactants!.filter(this.isInteractant);
   }
+
+  /** 
+   * This function was developed for the workshop in Bologna, October 2026
+   * It changes the color palete of this agent's cMentalModel, sets the agent's index
+   * in the new color palete and updates the agent's color.
+   */
+  setCustomColorPaleteAndIndex(names: string, values: string[], pos: number) {
+    this.cMentalModel.setCustomColorPalette(names, values);
+    let col = this.cMentalModel.colorPalette[pos];
+    if (col) this.cMentalModel.setMyIndex(col.value);
+
+    this.colorValues = col;
+  }
 }

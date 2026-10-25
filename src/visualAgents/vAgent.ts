@@ -1,4 +1,3 @@
-import { Agent } from "../agents/agent";
 import { NewHuman } from "../agents/newAgent";
 import { Human } from "../agents/humanAgent";
 import p5 from "p5";
@@ -108,7 +107,7 @@ export class VAgent {
 
   showSteps(start: number = 0, end: number = this.agent.locations.length, weight: number = 3) {
     
-    // make sure the end ans start are within array length boundarties
+    // make sure the end and start are within array length boundarties
     if (end < start) start = end;
     if (start > this.agent.locations.length) start = this.agent.locations.length;
     if (end > this.agent.locations.length) end = this.agent.locations.length;
