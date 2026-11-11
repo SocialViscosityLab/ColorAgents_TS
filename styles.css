@@ -40,3 +40,30 @@ button {
   border:none;
   box-shadow: none;
 }
+
+ .header-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        align-items: center;
+      }
+
+      @media (max-width: 600px) {
+        .header-grid {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: repeat(3, auto);
+          text-align: center;
+        }
+
+        .header-grid > div {
+          margin: 8px !important;
+        }
+
+        .header-grid > div:last-child {
+          margin-top: 8px !important;
+        }
+
+        .header-grid img {
+          width: min(70%, 220px) !important;
+          margin: 0 auto !important;
+        }
+      }
