@@ -84,7 +84,7 @@ export class VAgent {
    */
   visualizeInteractions() {
     // for each pair
-    for (let pair of this.agent.getHumanInteractants()) {
+    for (let pair of this.agent.getInteractants()) {
       // grey stroke
       this.p5.stroke(200, 70);
       // draw an edge connecting this agent and its pair
